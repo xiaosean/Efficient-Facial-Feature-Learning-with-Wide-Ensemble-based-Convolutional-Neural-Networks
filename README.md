@@ -28,13 +28,77 @@ python main_esr9.py video -i ./media/terminator.mp4 -d -f 5 -s 3 -o ./test/
 The facial expression recognition framework can be started by running **main_esr9.py** followed by positional and optional arguments.
 
 ## Getting Started
-### Installation
+### Installation - Official
 1. Install python 3.6.
 2. Install dependencies by running:
 
 ```
 pip install -r requirements.txt
 ```
+
+### Installation - Xiaosean - docker version
+
+
+``` bash
+cd ~/Desktop
+
+# git clone 下載專案檔
+git clone https://github.com/siqueira-hc/Efficient-Facial-Feature-Learning-with-Wide-Ensemble-based-Convolutional-Neural-Networks.git
+
+# 利用 Dockerfile 下載 Image
+docker pull xiaosean/mvclabsharepytorch
+
+# 建立 Docker, 請先確保有插入webcam
+xhost +
+sudo docker run -t -i --name emotion --gpus all -v /home/viplab/:/data -p 5006:5006 -p 5007:5007 -p 5008:5008 --shm-size 120G \
+  --privileged -v /dev:/dev \
+  -e DISPLAY=$DISPLAY \
+  -e QT_X11_NO_MITSHM=1\
+  -v /tmp/.X11-unix:/tmp/.X11-unix xiaosean/mvclabsharepytorch /bin/bash
+
+# 進入 Docker 後 切換至 Desktop
+cd /data/Desktop
+
+# 進入至專案
+cd ./Efficient-Facial-Feature-Learning-with-Wide-Ensemble-based-Convolutional-Neural-Networks
+
+sudo apt-get update
+
+sudo apt-get install build-essential cmake
+
+# Install python package
+pip install -r requirements.txt
+
+pip install scikit-image
+
+pip install pandas
+
+# conda install -c conda-forge opencv
+conda install -c conda-forge opencv=4.1.0
+
+
+# Install dlib
+
+pip install dlib
+
+# For another package
+# pip install -U scikit-learn
+
+# For multi-person
+# conda remove opencv
+# conda install -c menpo opencv
+
+# pip install --upgrade pip
+# pip install opencv-contrib-python
+
+# sudo apt install libgl1-mesa-glx
+
+# sudo apt-get install -y libgl1-mesa-glx.
+
+
+```
+
+
 
 Main python libraries used in our framework:
 - matplotlib 3.0.3
